@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lukas Børglum Højland</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f0f5f2;
+      --accent: #1e6b4a;
+      --accent-light: #28a06e;
+      --muted: #6b7f75;
+      --border: #c2d4cb;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: rgba(240, 245, 242, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 4rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-statement {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--ink);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--ink);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: 6rem 4rem;
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: 'LBH';
+      position: absolute;
+      top: -0.1em;
+      right: -0.05em;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-photo {
+      width: 320px;
+      height: 400px;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(20%);
+      position: relative;
+      z-index: 1;
+      border: 4px solid rgba(255,255,255,0.15);
+    }
+
+    .hero-photo-placeholder {
+      width: 320px;
+      height: 400px;
+      background: rgba(255,255,255,0.1);
+      border: 2px dashed rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-photo-placeholder span {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .hero-meta {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      z-index: 1;
+    }
+
+    .hero-meta-item {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-meta-item strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .about-body p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #3a3a38;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-values {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .value-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.4rem 1rem;
+    }
+
+    /* EXPERIENCE */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .experience-item:last-child { border-bottom: none; }
+
+    .exp-meta { padding-top: 0.25rem; }
+
+    .exp-period {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-company {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .exp-role {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .exp-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #3a3a38;
+    }
+
+    .exp-earlier {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* CERTIFICATIONS */
+    #certifications { background: #0d0d0d; }
+
+    #certifications .section-label { color: rgba(255,255,255,0.4); }
+    #certifications .section-label::after { background: rgba(255,255,255,0.1); }
+
+    .cert-groups {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .cert-group-title {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cert-item {
+      margin-bottom: 1.25rem;
+    }
+
+    .cert-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-issuer {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+    }
+
+    .cert-note {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-item {
+      background: var(--paper);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .skill-item:hover { background: var(--white); }
+
+    .skill-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.03em;
+    }
+
+    /* EDUCATION */
+    .education-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .edu-item {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    .edu-degree {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-school {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .edu-gpa {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 8rem 1.5rem 3rem; border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-right { display: none; }
+
+      section { padding: 4rem 1.5rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .experience-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      .cert-groups { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .education-list { grid-template-columns: 1fr; }
+
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-name">Lukas Børglum Højland</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Engagement Manager · Copenhagen</p>
+      <h1 class="hero-name">Lukas Børglum<br>Højland</h1>
+      <p class="hero-title">Trustworks</p>
+      <p class="hero-statement">
+        When organisations face complex IT initiatives with unclear direction and competing stakeholders, I create the structure and momentum needed to move forward. I combine hands-on project management with a genuine focus on people, trust, and long-term partnerships.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="#experience" class="btn-secondary">View experience</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-meta">
+        <p class="hero-meta-item"><strong>8+</strong> years in IT consulting</p>
+        <p class="hero-meta-item"><strong>Copenhagen,</strong> Denmark</p>
+      </div>
+      <img src="_26A0639.jpg" alt="Lukas Børglum Højland" class="hero-photo" />
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <p class="section-label">About</p>
+      <div class="about-grid fade-in">
+        <div>
+          <h2 class="about-heading">Project management consultant &amp; client partner</h2>
+        </div>
+        <div class="about-body">
+          <p>I am an experienced project management consultant with a strong foundation in consulting and client engagement. Throughout my career, I have helped organisations deliver complex initiatives within digital transformation, IT strategy, and business change, always with a focus on value creation and stakeholder alignment.</p>
+          <p>As Engagement Manager at Trustworks, I combine delivery experience with a people mindset to build strong, trust-based relationships with clients. I work closely with consultant and client teams to ensure high-quality execution, identify new opportunities, and support long-term partnerships.</p>
+          <p>My approach is grounded in curiosity, accountability, and integrity.</p>
+          <div class="about-values">
+            <span class="value-tag">Curiosity</span>
+            <span class="value-tag">Accountability</span>
+            <span class="value-tag">Integrity</span>
+            <span class="value-tag">Stakeholder Alignment</span>
+            <span class="value-tag">Value Creation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-inner">
+      <p class="section-label">Experience</p>
+      <div class="experience-list">
+
+        <div class="experience-item fade-in">
+          <div class="exp-meta">
+            <p class="exp-period">2022 — Present</p>
+            <p class="exp-company">Trustworks</p>
+            <p class="exp-role">Engagement Manager</p>
+          </div>
+          <div class="exp-body">
+            <p>Responsible for key client accounts across the public and private sector, managing staffing, delivery quality, client relationships, and account growth. Currently serving as account manager for a major retail client while simultaneously delivering as project manager on a public sector engagement.</p>
+          </div>
+        </div>
+
+        <div class="experience-item fade-in">
+          <div class="exp-meta">
+            <p class="exp-period">2019 — 2022</p>
+            <p class="exp-company">KMD</p>
+            <p class="exp-role">Project Manager</p>
+          </div>
+          <div class="exp-body">
+            <p>Led a strategic hybrid IT programme aimed at establishing KMD as a significant player in the Danish cloud market, resulting in the creation of a new Cloud Capability Center. Also delivered a supply-critical private cloud infrastructure project and a complex SWIFT compliance implementation for a major financial client.</p>
+          </div>
+        </div>
+
+        <div class="experience-item fade-in">
+          <div class="exp-meta">
+            <p class="exp-period">Earlier</p>
+            <p class="exp-company" style="font-size:1.1rem;">Earlier experience</p>
+          </div>
+          <div class="exp-body">
+            <p class="exp-earlier">Associate Consultant at Inspari, IT Recruiter at Hays, and various client-facing roles in support and administration. This background gave me a broad foundation in IT consulting, talent assessment, and stakeholder communication.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-inner">
+      <p class="section-label">Certifications</p>
+      <div class="cert-groups fade-in">
+
+        <div>
+          <p class="cert-group-title">Project Management</p>
+          <div class="cert-item">
+            <p class="cert-name">PMI Agile Certified Practitioner (PMI-ACP)</p>
+            <p class="cert-issuer">Project Management Institute</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">MoP Foundation</p>
+            <p class="cert-issuer">PeopleCert</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">PRINCE2 Practitioner</p>
+            <p class="cert-issuer">PeopleCert</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">Professional Scrum Master 1</p>
+            <p class="cert-issuer">Scrum.org</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">Reference Class Forecasting Essentials</p>
+            <p class="cert-issuer">Oxford Global Projects</p>
+            <p class="cert-note">A data-driven approach to project estimation developed by Bent Flyvbjerg, one of the world's leading experts on large-scale project delivery.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="cert-group-title">AI in Project Management</p>
+          <div class="cert-item">
+            <p class="cert-name">AI in Agile Delivery</p>
+            <p class="cert-issuer">Project Management Institute</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">Practical Application of Gen AI for Project Managers</p>
+            <p class="cert-issuer">Project Management Institute</p>
+          </div>
+          <div class="cert-item">
+            <p class="cert-name">Generative AI Overview for Project Managers</p>
+            <p class="cert-issuer">Project Management Institute</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="cert-group-title">Agile &amp; Scaling</p>
+          <div class="cert-item">
+            <p class="cert-name">Certified SAFe 6 Product Owner / Product Manager</p>
+            <p class="cert-issuer">Scaled Agile, Inc.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" style="background: var(--white);">
+    <div class="section-inner">
+      <p class="section-label">Skills</p>
+      <div class="skills-grid fade-in">
+        <div class="skill-item">
+          <p class="skill-number">01</p>
+          <p class="skill-name">Project Management</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">02</p>
+          <p class="skill-name">Stakeholder Management</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">03</p>
+          <p class="skill-name">Digital Transformation</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">04</p>
+          <p class="skill-name">AI in Project Delivery</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">05</p>
+          <p class="skill-name">Client Engagement</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">06</p>
+          <p class="skill-name">Agile &amp; SAFe</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">07</p>
+          <p class="skill-name">Cloud Strategy</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-number">08</p>
+          <p class="skill-name">PMO &amp; Portfolio Management</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-inner">
+      <p class="section-label">Education</p>
+      <div class="education-list fade-in">
+        <div class="edu-item">
+          <p class="edu-degree">MSc, Digital Innovation &amp; Management</p>
+          <p class="edu-school">IT-Universitetet i København</p>
+          <p class="edu-period">2017 — 2019</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-degree">Bachelor of Business Administration</p>
+          <p class="edu-school">Roskilde University</p>
+          <p class="edu-period">2014 — 2017</p>
+          <p class="edu-gpa">GPA: 10.1</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <p class="section-label">Contact</p>
+      <h2 class="contact-heading fade-in">Let's work<br>together.</h2>
+      <p class="contact-sub fade-in">Interested in working together or learning more about what I do? Reach out via LinkedIn or email.</p>
+      <div class="contact-links fade-in">
+        <a href="https://www.linkedin.com/in/lukashoejland/" target="_blank" class="btn-primary">LinkedIn</a>
+        <a href="mailto:lukas.hoejland@trustworks.dk" class="btn-secondary">lukas.hoejland@trustworks.dk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Lukas Børglum Højland</span>
+    <span class="footer-copy">Copenhagen, Denmark</span>
+  </footer>
+
+  <script>
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
